@@ -1,0 +1,54 @@
+{
+
+  "name": "backend",
+
+  "version": "1.0.0",
+
+  "description": "",
+
+  "main": "index.js",
+
+  "type": "module",
+
+  "scripts": {
+
+    "test": "jest  --config=jest.config.mjs"
+
+  },
+
+  "author": "",
+
+  "license": "ISC",
+
+  "dependencies": {
+
+    "cookie-parser": "^1.4.6",
+
+    "cors": "^2.8.5",
+
+    "dotenv": "^16.4.5",
+
+    "ejs": "^3.1.10",
+
+    "express": "^4.19.2",
+
+    "jest": "^29.7.0",
+
+    "mongodb": "^6.6.1",
+
+    "mongoose": "^8.3.4"
+
+  },
+
+  "devDependencies": {
+
+    "@babel/core": "^7.24.5",
+
+    "@babel/node": "^7.23.9",
+
+    "@babel/preset-env": "^7.24.5"
+
+  }
+
+}
+

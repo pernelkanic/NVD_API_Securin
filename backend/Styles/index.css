@@ -1,0 +1,127 @@
+.App {
+    width: 94%;
+    
+    display: flex;
+    margin-top: 3em;
+    flex-direction: column;
+    justify-content: left;
+  
+    
+  }
+  
+  .limit_container{
+    margin-left: 7em;
+    display: flex;
+    gap: 10px;
+    width: 80%;
+  } 
+  .limit_container p{
+    margin-top: 1em;
+  }
+  .limit_container select{
+    margin-top: 1em;
+  }
+  /* .limit{
+    margin-top: 2em;
+    
+  }
+  */
+  table {
+    
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 80em;
+    margin-left: 5em;
+    height: 10em;
+    
+  
+  }
+  .inner_table{
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 80em;
+    height: 3em;
+  }
+  .first_container{
+    display: flex;
+    gap: 4em;
+  }
+  .cvv2_txt{
+    font-size: 1.2em;
+  }
+  .severity_container{
+  display: flex;
+  gap: 10px;
+  align-content: center;
+  align-items: center;
+  
+  }
+  
+  .cveid{
+    text-decoration: none;
+    color: black;
+  }
+  th{
+    background-color: #dddddd;
+  }
+  td, th {
+    
+    border: 1px solid #c6c3c3;
+    text-align: center;
+    padding: 8px;
+  
+  }
+  .cve_header{
+    display: flex;
+    justify-content: center;
+  }
+  
+  .inner_table_row th{
+    text-align: center;
+    background-color: rgb(255, 255, 255) !important
+  }
+  .pagination {
+    display: flex;
+    justify-content: center;
+    align-items:flex-end;
+    margin-top: 20px;
+  }
+  .cve_container{
+    margin-left: 1em;
+  }
+  .pagination p, .pagination button {
+    margin: 0 0px;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+  }
+  .totaldiv{
+    margin-left: 7em;
+  
+    
+  }
+  .search_container {
+    display: flex;
+    justify-content: center;
+    gap: 2em;
+    margin-bottom: 1em;
+  
+    
+  }
+  .submitbtn{}
+  .pagination button {
+    background-color: #959595;
+    color: #333;
+    padding: 6px 14px;
+  }
+  
+  .pagination button.active {
+    background-color: #ffffff;
+    color: #000000;
+  }
+  
+  .pagination p {
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
