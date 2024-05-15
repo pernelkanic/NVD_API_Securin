@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>CVE-Data</title>
 </head>
 <style>
     .App {
@@ -141,21 +141,117 @@
             <h1><%= cveById.id %></h1>
             <h2>Description:</h2>
             <p><%= cveById.descriptions[0].value %></p>
-            <h2>CVSS V2 Metrics:</h2>
+            
+            <% if (cveById.metrics.cvssMetricV2 && cveById.metrics.cvssMetricV2.length > 0) { %>
+              <h2>CVSS V2 Metrics:</h2>
+              <div class='first_container'>
+                  <div class='severity_container'>
+                      <h3><b>Severity:</b></h3>
+                      <p><%= cveById.metrics.cvssMetricV2[0].baseSeverity %></p>
+                  </div>
+                  <div class='severity_container'>
+                      <h3><b>Score:</b></h3>
+                      <h3 style='color: red'><%= cveById.metrics.cvssMetricV2[0].cvssData.baseScore %></h3>
+                  </div>
+              </div>
+              <div>
+                  <div class='severity_container'>
+                      <h3><b>Vector String:</b></h3>
+                      <p><%= cveById.metrics.cvssMetricV2[0].cvssData.vectorString %></p>
+                  </div>
+                  <table class='inner_table'>
+                      <tr class='inner_table_row'>
+                          <th>Access Vector</th>
+                          <th>Access Complexity</th>
+                          <th>Authentication</th>
+                          <th>Confidentiality Impact</th>
+                          <th>Integrity Impact</th>
+                          <th>Availability Impact</th>
+                      </tr>
+                      <tr>
+                          <td><%= cveById.metrics.cvssMetricV2[0].cvssData.accessVector %></td>
+                          <td><%= cveById.metrics.cvssMetricV2[0].cvssData.accessComplexity %></td>
+                          <td><%= cveById.metrics.cvssMetricV2[0].cvssData.authentication %></td>
+                          <td><%= cveById.metrics.cvssMetricV2[0].cvssData.confidentialityImpact %></td>
+                          <td><%= cveById.metrics.cvssMetricV2[0].cvssData.integrityImpact %></td>
+                          <td><%= cveById.metrics.cvssMetricV2[0].cvssData.availabilityImpact %></td>
+                      </tr>
+                  </table>
+              </div>
+              <h1>Scores:</h1>
+              <div class='severity_container'>
+                  <h3><b>Exploitability Score:</b></h3>
+                  <p><%= cveById.metrics.cvssMetricV2[0].exploitabilityScore %></p>
+              </div>
+              <div class='severity_container'>
+                  <h3><b>Impact Score:</b></h3>
+                  <p><%= cveById.metrics.cvssMetricV2[0].impactScore %></p>
+              </div>
+          <% } else if (cveById.metrics.cvssMetricV31 && cveById.metrics.cvssMetricV31.length > 0) { %>
+
+
+            <h2>CVSS V3.1 Metrics:</h2>
+            
             <div class='first_container'>
+              <div class='severity_container'>
+                  <h3><b>Severity:</b></h3>
+                  <p><%= cveById.metrics.cvssMetricV31[0].cvssData.baseSeverity %></p>
+              </div>
+              <div class='severity_container'>
+                  <h3><b>Score:</b></h3>
+                  <h3 style='color: red'><%= cveById.metrics.cvssMetricV31[0].cvssData.baseScore %></h3>
+              </div>
+          </div>
+          <div>
+              <div class='severity_container'>
+                  <h3><b>Vector String:</b></h3>
+                  <p><%= cveById.metrics.cvssMetricV31[0].cvssData.vectorString %></p>
+              </div>
+              <table class='inner_table'>
+                  <tr class='inner_table_row'>
+                      <th>Access Vector</th>
+                      <th>Access Complexity</th>
+                      <th>Authentication</th>
+                      <th>Confidentiality Impact</th>
+                      <th>Integrity Impact</th>
+                      <th>Availability Impact</th>
+                  </tr>
+                  <tr>
+                      <td><%= cveById.metrics.cvssMetricV31[0].cvssData.accessVector || cveById.metrics.cvssMetricV31[0].cvssData.attackVector %></td>
+                      <td><%= cveById.metrics.cvssMetricV31[0].cvssData.accessComplexity ||cveById.metrics.cvssMetricV31[0].cvssData.attackComplexity  %></td>
+                      <td><%= cveById.metrics.cvssMetricV31[0].cvssData.authentication || null %></td>
+                      <td><%= cveById.metrics.cvssMetricV31[0].cvssData.confidentialityImpact %></td>
+                      <td><%= cveById.metrics.cvssMetricV31[0].cvssData.integrityImpact %></td>
+                      <td><%= cveById.metrics.cvssMetricV31[0].cvssData.availabilityImpact %></td>
+                  </tr>
+              </table>
+          </div>
+          <h1>Scores:</h1>
+          <div class='severity_container'>
+              <h3><b>Exploitability Score:</b></h3>
+              <p><%= cveById.metrics.cvssMetricV31[0].exploitabilityScore %></p>
+          </div>
+          <div class='severity_container'>
+              <h3><b>Impact Score:</b></h3>
+              <p><%= cveById.metrics.cvssMetricV31[0].impactScore %></p>
+          </div>
+            <% } else if (cveById.metrics.cvssMetricV30 && cveById.metrics.cvssMetricV30.length > 0) { %>
+              <h2>CVSS V3.0 Metrics:</h2>
+            
+              <div class='first_container'>
                 <div class='severity_container'>
                     <h3><b>Severity:</b></h3>
-                    <p><%= cveById.metrics.cvssMetricV2[0].baseSeverity %></p>
+                    <p><%= cveById.metrics.cvssMetricV30[0].cvssData.baseSeverity %></p>
                 </div>
                 <div class='severity_container'>
                     <h3><b>Score:</b></h3>
-                    <h3 style='color: red'><%=  cveById.metrics.cvssMetricV2[0].cvssData.baseScore %></h3>
+                    <h3 style='color: red'><%= cveById.metrics.cvssMetricV30[0].cvssData.baseScore %></h3>
                 </div>
             </div>
             <div>
                 <div class='severity_container'>
                     <h3><b>Vector String:</b></h3>
-                    <p><%= cveById.metrics.cvssMetricV2[0].vectorString %></p>
+                    <p><%= cveById.metrics.cvssMetricV30[0].cvssData.vectorString %></p>
                 </div>
                 <table class='inner_table'>
                     <tr class='inner_table_row'>
@@ -167,24 +263,26 @@
                         <th>Availability Impact</th>
                     </tr>
                     <tr>
-                        <td><%= cveById.metrics.cvssMetricV2[0].cvssData.accessVector %></td>
-                        <td><%= cveById.metrics.cvssMetricV2[0].cvssData.accessComplexity %></td>
-                        <td><%= cveById.metrics.cvssMetricV2[0].cvssData.authentication %></td>
-                        <td><%= cveById.metrics.cvssMetricV2[0].cvssData.confidentialityImpact %></td>
-                        <td><%= cveById.metrics.cvssMetricV2[0].cvssData.integrityImpact %></td>
-                        <td><%= cveById.metrics.cvssMetricV2[0].cvssData.availabilityImpact %></td>
+                        <td><%= cveById.metrics.cvssMetricV30[0].cvssData.accessVector || cveById.metrics.cvssMetricV31[0].cvssData.attackVector %></td>
+                        <td><%= cveById.metrics.cvssMetricV30[0].cvssData.accessComplexity ||cveById.metrics.cvssMetricV31[0].cvssData.attackComplexity  %></td>
+                        <td><%= cveById.metrics.cvssMetricV30[0].cvssData.authentication || null %></td>
+                        <td><%= cveById.metrics.cvssMetricV30[0].cvssData.confidentialityImpact %></td>
+                        <td><%= cveById.metrics.cvssMetricV30[0].cvssData.integrityImpact %></td>
+                        <td><%= cveById.metrics.cvssMetricV30[0].cvssData.availabilityImpact %></td>
                     </tr>
                 </table>
             </div>
             <h1>Scores:</h1>
             <div class='severity_container'>
                 <h3><b>Exploitability Score:</b></h3>
-                <p><%= cveById.metrics.cvssMetricV2[0].exploitabilityScore %></p>
+                <p><%= cveById.metrics.cvssMetricV30[0].exploitabilityScore %></p>
             </div>
             <div class='severity_container'>
                 <h3><b>Impact Score:</b></h3>
-                <p><%= cveById.metrics.cvssMetricV2[0].impactScore %></p>
+                <p><%= cveById.metrics.cvssMetricV30[0].impactScore %></p>
             </div>
+              <% }%> 
+              <%  if (cveById.configurations && cveById.configurations.length > 0) { %>
             <h2>CPE:</h2>
             <div>
                 <table class='inner_table'>
@@ -202,6 +300,7 @@
                     <% }); %>
                 </table>
             </div>
+            <% } %>
         </div>
   
     
