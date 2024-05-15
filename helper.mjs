@@ -182,7 +182,7 @@ async function setUpdate(){
               });
               console.log("created a new entry");
 
-            //   cleanDb(); // clean the Database by removing all the rejected status data 
+              cleanDb(); // clean the Database by removing all the rejected status data 
         }
         else{
             console.log("the database and API are in sync");
