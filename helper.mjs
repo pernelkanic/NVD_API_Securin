@@ -24,7 +24,7 @@ mongoose.connect(process.env.MONGO_URL)
 
 async function indexFunction() {
     try {
-       let startinx = 0;
+       let startinx = 104000;
         let pagePerSize=  2000;
 
         while(true){
