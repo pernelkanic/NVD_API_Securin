@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    .App {
+    width: 94%;
+    
+    display: flex;
+    margin-top: 3em;
+    flex-direction: column;
+    justify-content: left;
+  
+    
+  }
+  
+  .limit_container{
+    margin-left: 7em;
+    display: flex;
+    gap: 10px;
+    width: 80%;
+  } 
+  .limit_container p{
+    margin-top: 1em;
+  }
+  .limit_container select{
+    margin-top: 1em;
+  }
+  /* .limit{
+    margin-top: 2em;
+    
+  }
+  */
+  table {
+    
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 80em;
+    margin-left: 5em;
+    height: 10em;
+    
+  
+  }
+  .inner_table{
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 80em;
+    height: 3em;
+  }
+  .first_container{
+    display: flex;
+    gap: 4em;
+  }
+  .cvv2_txt{
+    font-size: 1.2em;
+  }
+  .severity_container{
+  display: flex;
+  gap: 10px;
+  align-content: center;
+  align-items: center;
+  
+  }
+  
+  .cveid{
+    text-decoration: none;
+    color: black;
+  }
+  th{
+    background-color: #dddddd;
+  }
+  td, th {
+    
+    border: 1px solid #c6c3c3;
+    text-align: center;
+    padding: 8px;
+  
+  }
+  .cve_header{
+    display: flex;
+    justify-content: center;
+  }
+  
+  .inner_table_row th{
+    text-align: center;
+    background-color: rgb(255, 255, 255) !important
+  }
+  .pagination {
+    display: flex;
+    justify-content: center;
+    align-items:flex-end;
+    margin-top: 20px;
+  }
+  .cve_container{
+    margin-left: 1em;
+  }
+  .pagination p, .pagination button {
+    margin: 0 0px;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+  }
+  .totaldiv{
+    margin-left: 7em;
+  
+    
+  }
+  .search_container {
+    display: flex;
+    justify-content: center;
+    gap: 2em;
+    margin-bottom: 1em;
+  
+    
+  }
+  .submitbtn{}
+  .pagination button {
+    background-color: #959595;
+    color: #333;
+    padding: 6px 14px;
+  }
+  
+  .pagination button.active {
+    background-color: #ffffff;
+    color: #000000;
+  }
+  
+  .pagination p {
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+</style>
+<body>
+   
+        <div class='cve_container'>
+            <h1><%= cveById.id %></h1>
+            <h2>Description:</h2>
+            <p><%= cveById.descriptions[0].value %></p>
+            <h2>CVSS V2 Metrics:</h2>
+            <div class='first_container'>
+                <div class='severity_container'>
+                    <h3><b>Severity:</b></h3>
+                    <p><%= cveById.metrics.cvssMetricV2[0].baseSeverity %></p>
+                </div>
+                <div class='severity_container'>
+                    <h3><b>Score:</b></h3>
+                    <h3 style='color: red'><%=  cveById.metrics.cvssMetricV2[0].cvssData.baseScore %></h3>
+                </div>
+            </div>
+            <div>
+                <div class='severity_container'>
+                    <h3><b>Vector String:</b></h3>
+                    <p><%= cveById.metrics.cvssMetricV2[0].vectorString %></p>
+                </div>
+                <table class='inner_table'>
+                    <tr class='inner_table_row'>
+                        <th>Access Vector</th>
+                        <th>Access Complexity</th>
+                        <th>Authentication</th>
+                        <th>Confidentiality Impact</th>
+                        <th>Integrity Impact</th>
+                        <th>Availability Impact</th>
+                    </tr>
+                    <tr>
+                        <td><%= cveById.metrics.cvssMetricV2[0].cvssData.accessVector %></td>
+                        <td><%= cveById.metrics.cvssMetricV2[0].cvssData.accessComplexity %></td>
+                        <td><%= cveById.metrics.cvssMetricV2[0].cvssData.authentication %></td>
+                        <td><%= cveById.metrics.cvssMetricV2[0].cvssData.confidentialityImpact %></td>
+                        <td><%= cveById.metrics.cvssMetricV2[0].cvssData.integrityImpact %></td>
+                        <td><%= cveById.metrics.cvssMetricV2[0].cvssData.availabilityImpact %></td>
+                    </tr>
+                </table>
+            </div>
+            <h1>Scores:</h1>
+            <div class='severity_container'>
+                <h3><b>Exploitability Score:</b></h3>
+                <p><%= cveById.metrics.cvssMetricV2[0].exploitabilityScore %></p>
+            </div>
+            <div class='severity_container'>
+                <h3><b>Impact Score:</b></h3>
+                <p><%= cveById.metrics.cvssMetricV2[0].impactScore %></p>
+            </div>
+            <h2>CPE:</h2>
+            <div>
+                <table class='inner_table'>
+                    <tr class='inner_table_row'>
+                        <th>Criteria</th>
+                        <th>Match Criteria ID</th>
+                        <th>Vulnerable</th>
+                    </tr>
+                    <% cveById.configurations[0].nodes[0].cpeMatch.forEach(function (val) { %>
+                        <tr>
+                            <td><%= val.criteria %></td>
+                            <td><%= val.matchCriteriaId %></td>
+                            <td><%= val.vulnerable ? "Yes" : "No" %></td>
+                        </tr>
+                    <% }); %>
+                </table>
+            </div>
+        </div>
+  
+    
+</body>
+</html>

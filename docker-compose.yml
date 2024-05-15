@@ -1,0 +1,9 @@
+
+services:
+  mongodb:
+    image: mongo
+    ports:
+      - 27017:27017
+    volumes:
+      - C:/mongodb/db/securin:/data/db 
+ 

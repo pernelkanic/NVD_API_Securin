@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   
+    <title>CVE List</title>
+</head>
+<style>
+    .App {
+    width: 94%;
+    
+    display: flex;
+    margin-top: 3em;
+    flex-direction: column;
+    justify-content: left;
+  
+    
+  }
+  
+  .limit_container{
+    margin-left: 10em;
+   
+    display: flex;
+    gap: 10px;
+    
+  } 
+  .limit_container p{
+    margin-top: 1em;
+  }
+  .limit_container select{
+    margin-top: 1em;
+  }
+  /* .limit{
+    margin-top: 2em;
+    
+  }
+  */
+  table {
+    
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 80em;
+    margin-left: 5em;
+    height: 10em;
+    
+  
+  }
+  .inner_table{
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 80em;
+    height: 3em;
+  }
+  .first_container{
+    display: flex;
+    gap: 4em;
+  }
+  .cvv2_txt{
+    font-size: 1.2em;
+  }
+  .severity_container{
+  display: flex;
+  gap: 10px;
+  align-content: center;
+  align-items: center;
+  
+  }
+  
+  .cveid{
+    text-decoration: none;
+    color: black;
+  }
+  th{
+    background-color: #dddddd;
+  }
+  td, th {
+    
+    border: 1px solid #c6c3c3;
+    text-align: center;
+    padding: 8px;
+  
+  }
+  .cve_header{
+    display: flex;
+    justify-content: center;
+  }
+  
+  .inner_table_row th{
+    text-align: center;
+    background-color: rgb(255, 255, 255) !important
+  }
+  .pagination {
+    display: flex;
+    justify-content: center;
+    align-items:flex-end;
+    margin-top: 20px;
+  }
+  .cve_container{
+    margin-left: 1em;
+  }
+  .pagination p, .pagination button {
+    margin: 0 0px;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+  }
+  .totaldiv{
+    margin-left: 7em;
+  
+    
+  }
+  .anchor_page{
+    font-size: 1.4em;
+    margin-left: 10px;
+    text-decoration: none;
+  
+    border:1px solid   #000000 ;
+    background-color: #ffffff;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-right: 10px;
+  }
+
+  .search_container {
+    display: flex;
+    justify-content: center;
+    gap: 2em;
+    margin-bottom: 1em;
+  
+    
+  }
+
+
+  
+  .pagination p {
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+</style>
+<body>
+    <h1 style="text-align: center;">CVE List</h1>
+
+    <div id="App">
+   
+        <div class='top_container'>
+            <p class='totaldiv'><b>Total Records: <%= count %></b> </p>
+           
+                <div class='search_container'>
+                    <label for="cveid">CveId:</label>
+                    <input type="text" id="cveidinput" name="id" style="height:16px;" />
+                    <label for="year">Year:</label>
+                    <input type="text" id="year" name="year" style="height: 16px;" />
+                    <label for="lt" >Lesser than score:</label>
+                    <input type="text" id="lt" name="lt" style="height: 16px;" />
+                    </div>
+                    <br>
+                    <div class='search_container'>
+                        <label htmlFor="">Greater Than Score:</label>
+                        <input type="text" name="" id="gt" />
+                        <label htmlFor="">Last Modified:</label>
+                        <input type="text" name="" id="lm"  />
+                        
+                      
+                        </div>
+                        <div style="display: flex;  margin-left: 30em; gap: 5em; margin-bottom: 2em; align-items: flex-end;">
+                    <div class='limit_container'>
+                        <p><b>Results Per Page</b></p>
+                        <select name="limit" id="limit" class='limit'   >
+                            <option value="10">10</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                        </select>
+                        
+                    </div>
+                    <button type="submit" id="submitButton" onclick="fetchData()" style="height: 30px;" >Search</button>
+                </div>
+            
+                </div>
+        
+                
+        </div>
+        
+            
+            <table>
+                <tr>
+                    <th>CVE ID</th>
+                    <th>Identifier</th>
+                    <th>Published Date</th>
+                    <th>Last Modified Date</th>
+                    <th>Status</th>
+                </tr>
+                <% Cve.forEach(cve => { %>
+                    <tr>
+                        <td ><a href=" /cves/<%= cve.id %>" class='cveid'><%= cve.id %></a></td>
+                        <td><%= cve.sourceIdentifier %></td>
+                        <td><%= new Date(cve.published).toUTCString().substring(4,17) %></td>
+                        <td><%= new Date(cve.lastModified).toUTCString().substring(4,17) %></td>
+                        <td><%= cve.vulnStatus %></td>
+                    </tr>
+                <% }); %>
+            </table>
+
+                    <% let currentPage = page  || 1 ; %>
+        <% const recordsPerPage = limit; %>
+        <% const totalPages = countofpages; %>
+        <% const maxPagesToShow = 4; %>
+
+        <% const nextPage = () => {
+            if (currentPage < totalPages) {
+                
+                currentpage = currentPage + 1;
+            }
+        }; %>
+
+        <% const prevPage = () => {
+            if (currentPage > 1) {
+                currentpage = currentPage - 1;
+                
+            }
+        }; %>
+
+        <% const getPageRange = () => {
+          if (totalPages <= 1) {
+            return [1];
+        }
+        // Otherwise, proceed with the regular logic to calculate the range
+        let rangeStart = Math.max(1, currentPage - Math.floor(maxPagesToShow / 2));
+        let rangeEnd = Math.min(totalPages, rangeStart + maxPagesToShow - 1);
+    
+        // Adjust rangeEnd if it goes beyond the total number of pages
+        if (rangeEnd - rangeStart < maxPagesToShow - 1) {
+            rangeEnd = Math.min(totalPages, rangeStart + maxPagesToShow - 1);
+            rangeStart = Math.max(1, rangeEnd - maxPagesToShow + 1);
+        }
+    
+        return Array.from({ length: rangeEnd - rangeStart + 1 }, (_, i) => rangeStart + i);
+    }; %>
+
+        <% const renderPaginationNumbers = () => {
+            const pageRange = getPageRange();
+
+          return pageRange.forEach((pageNumber) => { %>
+            <a 
+            href="?page=<%= pageNumber %>&limit=<%= limit %>&id=<%=id %>&gt=<%=gt%>&lt=<%=lt%>&year=<%=year%>&lastmodified=<%=lastModified%>"
+            class="anchor_page"
+            >
+            <%= pageNumber %>
+        </a>
+        
+          <% });
+      }; %>
+
+      <div class='pagination'>
+          
+          <%= renderPaginationNumbers() %>
+          <div style="gap:2em">
+            <p><%=(page - 1) * limit + 1%>-<%=limit * page%> of <%=count%> records</p>
+          </div>
+         
+      </div>
+   
+      
+            
+    </div>
+</body>
+<script>
+
+let currentPage =  '<%=page%>' || 1;
+        const recordsPerPage = limit;
+        const totalPages = '<%= countofpages %>'; 
+       const maxPagesToShow = 4; 
+
+       function fetchData() {
+        var id = document.getElementById('cveidinput').value;
+        var year = document.getElementById('year').value;
+        var lt = document.getElementById('lt').value;
+        var limit = document.getElementById('limit').value;
+        var lm = document.getElementById('lm').value;
+        var gt = document.getElementById('gt').value;
+
+        // Construct URL with parameters
+        var url = '?id=' + encodeURIComponent(id) +
+                  '&year=' + encodeURIComponent(year) +
+                  '&lt=' + encodeURIComponent(lt) +
+                  '&gt=' + encodeURIComponent(gt) +
+                  '&lastmodified=' + encodeURIComponent(lm) +
+                  '&limit=' + encodeURIComponent(limit);
+
+      fetch(url)
+      window.location.href = url
+          
+    }
+
+
+  
+  
+  const getPageRange = () => {
+    if (totalPages <= 1) {
+        return [1];
+    }
+    let rangeStart = Math.max(1, currentPage - Math.floor(maxPagesToShow / 2));
+    let rangeEnd = Math.min(totalPages, rangeStart + maxPagesToShow - 1);
+
+    // Adjust rangeEnd if it goes beyond the total number of pages
+    if (rangeEnd - rangeStart < maxPagesToShow - 1) {
+        rangeEnd = Math.min(totalPages, rangeStart + maxPagesToShow - 1);
+        rangeStart = Math.max(1, rangeEnd - maxPagesToShow + 1);
+    }
+
+    return Array.from({ length: rangeEnd - rangeStart + 1 }, (_, i) => rangeStart + i);
+}; 
+        const prevPage = () => {
+            if (currentPage > 1) {
+                currentPage--;
+                
+            }
+        };
+        const nextPage = () => {
+            if (currentPage < totalPages) {
+              currentPage++;
+            }
+        };
+      
+</script>
+
+</html>
+
