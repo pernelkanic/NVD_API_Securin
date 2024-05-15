@@ -38,10 +38,12 @@ export const getListCve = async (req,res)=>{
         let Cve;
         if (lastModified !== -1) {
             Cve = await collection.find(query).limit(lastModified).sort({ lastModified: -1 }).toArray();
+            
             count = Cve.length;
            
         } else {
             Cve = await collection.find(query).sort({published : 1 }).limit(limit).skip((page - 1) * limit).toArray();
+            
         }
         
        
@@ -60,6 +62,7 @@ export const getcveById =async (req,res)=>{
     
     try{
         const cveById  = await collection.findOne({id : id});
+        console.log(cveById)
         res.render('cve' , { cveById: cveById });
     
  }
